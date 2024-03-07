@@ -7,7 +7,7 @@ from typing import Callable
 
 class Planet(SphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(Planet, self).__init__(loader, modelPath, parentNode, nodeName, 0.2, 0.2)
+        super(Planet, self).__init__(loader, modelPath, parentNode, nodeName, 0.001, 0.001)
         self.modelNode = loader.loadModel(modelPath)
         self.modelNode.reparentTo(parentNode)
         self.modelNode.setPos(posVec)
@@ -42,7 +42,7 @@ class universe(InverseSphereCollideObject):
 
 class spaceShip(SphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float, task, render, accept: Callable[[str, Callable], None]):
-        super(spaceShip, self).__init__(loader, modelPath, parentNode, nodeName, 0.2, 1)
+        super(spaceShip, self).__init__(loader, modelPath, parentNode, nodeName, 0.1, 0.01)
         self.taskManager = task
         self.render = render
         self.accept = accept
