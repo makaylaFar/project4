@@ -2,8 +2,12 @@ from panda3d.core import Vec3
 from panda3d.core import *
 from direct.showbase.ShowBase import ShowBase
 from direct.task import Task
-class Planet(ShowBase):
+from collideObjectBase import *
+from typing import Callable
+
+class Planet(SphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
+        super(Planet, self).__init__(loader, modelPath, parentNode, nodeName, 0.2, 0.2)
         self.modelNode = loader.loadModel(modelPath)
         self.modelNode.reparentTo(parentNode)
         self.modelNode.setPos(posVec)
@@ -25,7 +29,7 @@ class Drone(ShowBase):
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
 
-class universe(ShowBase):
+class universe(InverseSphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
         self.modelNode = loader.loadModel(modelPath)
         self.modelNode.reparentTo(parentNode)
@@ -36,10 +40,12 @@ class universe(ShowBase):
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
 
-class spaceShip(ShowBase):
-    def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float, task, render):
+class spaceShip(SphereCollideObject):
+    def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float, task, render, accept: Callable[[str, Callable], None]):
+        super(spaceShip, self).__init__(loader, modelPath, parentNode, nodeName, 0.2, 1)
         self.taskManager = task
         self.render = render
+        self.accept = accept
 
         self.modelNode = loader.loadModel(modelPath)
         self.modelNode.reparentTo(parentNode)
@@ -49,6 +55,8 @@ class spaceShip(ShowBase):
         self.modelNode.setName(nodeName)
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
+        self.SetKeyBindings()
+
     def SetKeyBindings(self):
         self.accept("w", self.Thrust, [1])
         self.accept("w-up", self.Thrust, [0])

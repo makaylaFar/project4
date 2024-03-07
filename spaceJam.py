@@ -63,8 +63,6 @@ class spaceJam(ShowBase):
     
         
     def sceneSetup(self):
-        self.pusher.addCollider(self.ship.collisionNode, self.ship.modelNode)
-        self.cTrav.addCollider(self.ship.collisionNode, self.pusher)
         self.universe = spaceJamClasses.universe(self.loader, "./assets/universe/Universe.x", self.render,'universe',"./assets/universe/universe.jpeg", (0, 0, 0), 10000)
         self.planet1 = spaceJamClasses.Planet(self.loader, "./assets/planets/protoPlanet.x", self.render,'planet1',"./assets/planets/weirdPlanet.png", (-6000, -3000, -800), 250)
         self.planet2 = spaceJamClasses.Planet(self.loader, "./assets/planets/protoPlanet.x", self.render,'planet2',"./assets/planets/moon.jpg", (0, 6000, 0), 300)
@@ -72,8 +70,10 @@ class spaceJam(ShowBase):
         self.planet4 = spaceJamClasses.Planet(self.loader, "./assets/planets/protoPlanet.x", self.render,'planet4',"./assets/planets/sandy.jpg", (300, 6000, 500), 200)
         self.planet5 = spaceJamClasses.Planet(self.loader, "./assets/planets/protoPlanet.x", self.render,'planet5',"./assets/planets/mars.jpg", (700, 2000, 100), 500)
         self.planet6 = spaceJamClasses.Planet(self.loader, "./assets/planets/protoPlanet.x", self.render,'planet6',"./assets/planets/sun.jpg", (0, -900, -1400), 700)
-        self.ship = spaceJamClasses.spaceShip(self.loader, "./assets/spaceShip/Khan.egg", self.render,'ship', "./assets/spaceShip/Khan.jpg", (-1100, 200, -800), 10, self.taskMgr, self.render)
+        self.ship = spaceJamClasses.spaceShip(self.loader, "./assets/spaceShip/Khan.egg", self.render,'ship', "./assets/spaceShip/Khan.jpg", (-1100, 200, -800), 10, self.taskMgr, self.render, self.accept)
         self.spaceStation = spaceJamClasses.spaceStation(self.loader, "./assets/spaceStation/spaceStation.egg", self.render,'ship', "./assets/spaceStation/SpaceStation1_Dif2.png", (-3100, 200, 2000), 10)
+        self.pusher.addCollider(self.ship.collisionNode, self.ship.modelNode)
+        self.cTrav.addCollider(self.ship.collisionNode, self.pusher)
         self.SetCamera()    
         fullCycle = 60
 
@@ -89,5 +89,5 @@ class spaceJam(ShowBase):
 
 app = spaceJam()  
 app.sceneSetup()  
-app.ship.SetKeyBindings()
+#app.ship.SetKeyBindings()
 app.run()

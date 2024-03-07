@@ -11,7 +11,6 @@ class PlacedObject(PandaNode):
         self.modelNode.setName(nodeName)
 
         
-
 class CollidableObject(PlacedObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str):
         super(CollidableObject, self).__init__(loader, modelPath, parentNode, nodeName)
@@ -32,6 +31,11 @@ class CapsuleCollidableObject(CollidableObject):
         super(CapsuleCollidableObject, self).__init__(loader, modelPath, parentNode, nodeName)
         self.collisionNode.node().addSolid(CollisionCapsule(ax, ay, az, bx, by, bz, r))
         self.collisionNode.show()
+
+class SphereCollideObject(CollidableObject):
+    def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, colPositionVec: Vec3, colRadius: float):
+        super(SphereCollideObject, self).__init__(loader, modelPath, parentNode, nodeName)
+        self.collisionNode.node().addSolid(CollisionSphere(colPositionVec, colRadius))
 
 
 
