@@ -31,12 +31,17 @@ class CapsuleCollidableObject(CollidableObject):
         super(CapsuleCollidableObject, self).__init__(loader, modelPath, parentNode, nodeName)
         self.collisionNode.node().addSolid(CollisionCapsule(ax, ay, az, bx, by, bz, r))
        
-
 class SphereCollideObject(CollidableObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, colPositionVec: Vec3, colRadius: float):
         super(SphereCollideObject, self).__init__(loader, modelPath, parentNode, nodeName)
+
         self.collisionNode.node().addSolid(CollisionSphere(colPositionVec, colRadius))
         self.collisionNode.show()
+
+        print (nodeName)
+        print(colPositionVec)
+        print (colRadius)
+
 
 
 

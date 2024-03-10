@@ -7,7 +7,7 @@ from typing import Callable
 
 class Planet(SphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(Planet, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 300)
+        super(Planet, self).__init__(loader, modelPath, parentNode, nodeName, posVec, scaleVec * 0.5)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
@@ -18,10 +18,11 @@ class Planet(SphereCollideObject):
 class Drone(SphereCollideObject):
     droneCount = 0
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(Drone, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 0.001)
+        super(Drone, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 1)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
+        self.modelNode.setName(nodeName)
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
 
@@ -31,6 +32,7 @@ class universe(InverseSphereCollideObject):
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
+        self.modelNode.setName(nodeName)
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
 
@@ -43,6 +45,7 @@ class spaceShip(SphereCollideObject):
 
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
+        self.modelNode.setName(nodeName)
 
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
@@ -160,8 +163,7 @@ class spaceShip(SphereCollideObject):
 
 class spaceStation(CapsuleCollidableObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        self.modelNode = loader.loadModel(modelPath)
-        self.modelNode.reparentTo(parentNode)
+        super(spaceStation, self).__init__(loader, modelPath, parentNode, nodeName, 1, -1, 5, 1, -1, -5, 10)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
