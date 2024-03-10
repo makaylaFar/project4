@@ -7,17 +7,18 @@ from typing import Callable
 
 class Planet(SphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(Planet, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 1)
+        super(Planet, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 300)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
+        self.modelNode.setName(nodeName)
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
 
 class Drone(SphereCollideObject):
     droneCount = 0
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(Drone, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 1)
+        super(Drone, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 0.001)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
@@ -35,7 +36,7 @@ class universe(InverseSphereCollideObject):
 
 class spaceShip(SphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float, task, render, accept: Callable[[str, Callable], None]):
-        super(spaceShip, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 20)
+        super(spaceShip, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 1)
         self.taskManager = task
         self.render = render
         self.accept = accept
