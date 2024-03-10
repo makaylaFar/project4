@@ -22,10 +22,14 @@ class spaceJam(ShowBase):
     # Initialize ShowBase to be used later
     def __init__(self):
         ShowBase.__init__(self)
+        self.sceneSetup()
         self.cTrav = CollisionTraverser()
         self.cTrav.traverse(self.render)
         self.pusher = CollisionHandlerPusher()
         self.cTrav.showCollisions(self.render)
+        self.pusher.addCollider(self.ship.collisionNode, self.ship.modelNode)
+        self.cTrav.addCollider(self.ship.collisionNode, self.pusher)
+        
 
     # Draws the cloudDefense
     def DrawCloudDefense(self, centralObject, droneName):
@@ -74,8 +78,7 @@ class spaceJam(ShowBase):
         self.ship = spaceJamClasses.spaceShip(self.loader, "./assets/spaceShip/Dumbledore.egg", self.render,'ship', "./assets/spaceShip/spacejet_C.png", (0, 0, 0), 11, self.taskMgr, self.render, self.accept)
         self.spaceStation = spaceJamClasses.spaceStation(self.loader, "./assets/spaceStation/spaceStation.egg", self.render,'ship', "./assets/spaceStation/SpaceStation1_Dif2.png", (-3100, 200, 2000), 10)
 
-        self.pusher.addCollider(self.ship.collisionNode, self.ship.modelNode)
-        self.cTrav.addCollider(self.ship.collisionNode, self.pusher)
+        
         
         self.SetCamera()    
         fullCycle = 60
@@ -91,5 +94,4 @@ class spaceJam(ShowBase):
             
 
 app = spaceJam()  
-app.sceneSetup()  
 app.run()
