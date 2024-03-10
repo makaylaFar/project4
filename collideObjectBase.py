@@ -16,13 +16,14 @@ class CollidableObject(PlacedObject):
         super(CollidableObject, self).__init__(loader, modelPath, parentNode, nodeName)
 
         self.collisionNode = self.modelNode.attachNewNode(CollisionNode(nodeName + 'cNode_'))
+        
 
 
 class InverseSphereCollideObject(CollidableObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, colPositionVec: Vec3, colRadius: float):
         super(InverseSphereCollideObject, self).__init__(loader, modelPath, parentNode, nodeName)
         self.collisionNode.node().addSolid(CollisionInvSphere(colPositionVec, colRadius))
-        #self.collisionNode.show()
+        self.collisionNode.show()
 
 
 class CapsuleCollidableObject(CollidableObject):

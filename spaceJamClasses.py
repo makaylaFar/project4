@@ -7,52 +7,42 @@ from typing import Callable
 
 class Planet(SphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(Planet, self).__init__(loader, modelPath, parentNode, nodeName, 0.001, 0.001)
-        self.modelNode = loader.loadModel(modelPath)
-        self.modelNode.reparentTo(parentNode)
+        super(Planet, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 1)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
-        self.modelNode.setName(nodeName)
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
 
-class Drone(ShowBase):
+class Drone(SphereCollideObject):
     droneCount = 0
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        self.modelNode = loader.loadModel(modelPath)
-        self.modelNode.reparentTo(parentNode)
+        super(Drone, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 1)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
-        self.modelNode.setName(nodeName)
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
 
 class universe(InverseSphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        self.modelNode = loader.loadModel(modelPath)
-        self.modelNode.reparentTo(parentNode)
+        super(universe, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 1)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
-        self.modelNode.setName(nodeName)
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
 
 class spaceShip(SphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float, task, render, accept: Callable[[str, Callable], None]):
-        super(spaceShip, self).__init__(loader, modelPath, parentNode, nodeName, 0.1, 0.01)
+        super(spaceShip, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 20)
         self.taskManager = task
         self.render = render
         self.accept = accept
 
-        self.modelNode = loader.loadModel(modelPath)
-        self.modelNode.reparentTo(parentNode)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
-        self.modelNode.setName(nodeName)
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
         self.SetKeyBindings()
@@ -87,7 +77,7 @@ class spaceShip(SphereCollideObject):
 
 
     def ApplyThrust(self, task):
-        rate = 5
+        rate = 10
         trajectory = self.render.getRelativeVector(self.modelNode, Vec3.forward())
         trajectory.normalize()
         self.modelNode.setFluidPos(self.modelNode.getPos() + trajectory * rate)
@@ -167,7 +157,7 @@ class spaceShip(SphereCollideObject):
         self.modelNode.setR(self.modelNode.getR() - rate)
         return Task.cont
 
-class spaceStation(ShowBase):
+class spaceStation(CapsuleCollidableObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
         self.modelNode = loader.loadModel(modelPath)
         self.modelNode.reparentTo(parentNode)
