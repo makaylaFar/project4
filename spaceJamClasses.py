@@ -7,7 +7,7 @@ from typing import Callable
 
 class Planet(SphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(Planet, self).__init__(loader, modelPath, parentNode, nodeName, posVec, scaleVec * 0.5)
+        super(Planet, self).__init__(loader, modelPath, parentNode, nodeName, 0, 1)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
@@ -18,7 +18,7 @@ class Planet(SphereCollideObject):
 class Drone(SphereCollideObject):
     droneCount = 0
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(Drone, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 1)
+        super(Drone, self).__init__(loader, modelPath, parentNode, nodeName, 0, 2)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
@@ -28,7 +28,7 @@ class Drone(SphereCollideObject):
 
 class universe(InverseSphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(universe, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 1)
+        super(universe, self).__init__(loader, modelPath, parentNode, nodeName, 0, 1)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
 
@@ -38,7 +38,7 @@ class universe(InverseSphereCollideObject):
 
 class spaceShip(SphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float, task, render, accept: Callable[[str, Callable], None]):
-        super(spaceShip, self).__init__(loader, modelPath, parentNode, nodeName, posVec, 1)
+        super(spaceShip, self).__init__(loader, modelPath, parentNode, nodeName, 0, 2)
         self.taskManager = task
         self.render = render
         self.accept = accept
